@@ -1,0 +1,4 @@
+/target
+.env
+truth_or_dare.db
+Cargo.lock
