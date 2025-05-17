@@ -1,0 +1,11 @@
+# Ignore the .env file
+.env
+
+# Ignore Git-related files
+.git
+.gitignore
+# Ignore Rust-related files
+target
+
+# Ignore Docker-related files
+docker-compose.yml

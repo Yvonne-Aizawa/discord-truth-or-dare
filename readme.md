@@ -15,8 +15,7 @@ This project is a Discord bot that provides a fun and interactive way to play Tr
 ### Public Commands
 - `/truth`: Get a random truth question. 
 - `/dare`: Get a random dare.
-
-        both of these look at the channel they are in. if its age gated it chooses an nsfw question/dare
+##### both of these look at the channel they are in. if its age gated it chooses an nsfw question/dare
 ### Moderator Commands
 - `/add_question`: Add a new truth question.
 - `/add_dare`: Add a new dare.
@@ -32,11 +31,12 @@ This project is a Discord bot that provides a fun and interactive way to play Tr
 - `/truth`: Returns a random truth question.
 - `/dare`: Returns a random dare.
 - `/add_question "What is your biggest fear?"`: Adds a new truth question.
-- `/suggest "Do a handstand for 10 seconds"`: Suggests a new dare.
+- `/suggest Dare "Do a handstand for 10 seconds"`: Suggests a new dare.
+
 
 ## Setup
 
-### Prerequisites
+### Prerequisites (local)
 - Rust (latest stable version)
 - SQLite
 - A Discord bot token
@@ -44,8 +44,9 @@ This project is a Discord bot that provides a fun and interactive way to play Tr
   - `DISCORD_TOKEN`: Your bot's token from the Discord Developer Portal.
   - `ALLOWED_CHANNEL_IDS`: Comma-separated list of channel IDs where commands are allowed.
   - `SUGGESTION_CHANNEL_ID`: The channel ID where suggestions will be sent.
+  - `DATABASE_PATH`: where the database is stored defaults to ./data/truth_or_dare.db
 
-### Installation
+### Installation (local)
 1. Clone the repository:
    ```bash
    git clone https://github.com/Yvonne-Aizawa/discord-truth-or-dare.git
@@ -64,6 +65,24 @@ This project is a Discord bot that provides a fun and interactive way to play Tr
     ```bash
     cargo run --release
     ```
+### Prerequisites (docker)
+- docker and docker compose
+### Instalation (docker)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Yvonne-Aizawa/discord-truth-or-dare.git
+   cd discord-truth-or-dare
+2. create .env file
+    ```env
+    DISCORD_TOKEN=your_discord_token
+    ALLOWED_CHANNEL_IDS=123456789012345678,987654321098765432
+    SUGGESTION_CHANNEL_ID=123456789012345678
+    ```
+3. build and run the container
+   ```sh
+    sudo docker-compose up -d --build 
+   ```
+   if you already built the container you can leave --build away. if you make changes to the code re add it so the changes are put in the container
 ### Todo
 - [ ] make a command to allow/disallow a channel
 - [ ] allow sfw in nsfw channels when configured
@@ -74,6 +93,8 @@ The bot uses an SQLite database (truth_or_dare.db) to store truth questions and 
 
 * questions: Stores truth questions.
 * dares: Stores dares.
+* suggestions: stores sugestions
+  
 ### Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
 ### Support

@@ -17,7 +17,8 @@ fn initialize_database() -> SqlResult<Connection> {
     // Initialize the logger
 
     info!("Initializing database...");
-    let conn = match Connection::open("truth_or_dare.db") {
+    let db_path = env::var("DATABASE_PATH").unwrap_or_else(|_| "truth_or_dare.db".to_string());
+    let conn = match Connection::open(&db_path) {
         Ok(c) => c,
         Err(e) => {
             error!("Failed to open database: {}", e);

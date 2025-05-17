@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  discord-truth-or-dare:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: discord-truth-or-dare
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data/:/app/data
