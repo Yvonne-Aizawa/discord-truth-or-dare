@@ -65,10 +65,10 @@ This project is a Discord bot that provides a fun and interactive way to play Tr
     cargo run --release
     ```
 ### Todo
-- make a command to allow/disallow a channel
-- allow sfw in nsfw channels when configured
-- see if there is a way to hide admin only commands from non admins
-- make sure only admins can accept suggestions
+- [ ] make a command to allow/disallow a channel
+- [ ] allow sfw in nsfw channels when configured
+- [ ] see if there is a way to hide admin only commands from non admins
+- [x] make sure only admins can accept suggestions
 ### Database
 The bot uses an SQLite database (truth_or_dare.db) to store truth questions and dares. The database is automatically initialized with the following tables:
 
@@ -86,3 +86,4 @@ This project is licensed under the GNU GPLv3 License. See the LICENSE file for d
 * Poise for command framework.
 * dotenvy for environment variable management.
 * rusqlite for SQLite integration.
+* and of couse github copilot for doing 99% of this

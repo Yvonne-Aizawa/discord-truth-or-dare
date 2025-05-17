@@ -102,7 +102,7 @@ fn add_entry(conn: &Connection, table: &str, text: &str, nsfw: bool) -> Result<(
 }
 
 /// Middleware check to restrict commands to owners or users with a specific role
-async fn has_role(ctx: Context<'_>) -> Result<bool, Error> {
+async fn is_admin(ctx: Context<'_>) -> Result<bool, Error> {
     let required_role_name = "tod_admin"; // Replace with your desired role name
 
     if let Some(guild_id) = ctx.guild_id() {
@@ -123,7 +123,15 @@ async fn has_role(ctx: Context<'_>) -> Result<bool, Error> {
             }
         }
     }
-
+    //notify the user that they don't have the required role
+    ctx.send(
+        poise::CreateReply::default()
+            .content(format!(
+                "only users with the role {} can use this command",
+                required_role_name
+            ))
+            .ephemeral(true),
+    ).await;
     // If the user does not have the required role, return false
     Ok(false)
 }
@@ -157,7 +165,7 @@ async fn is_in_allowed_channel(ctx: Context<'_>) -> Result<bool, Error> {
             .ephemeral(true),
     )
     .await?;
-    Ok(false)
+    return Ok(false);
 }
 
 /// Get a random truth
@@ -237,7 +245,7 @@ async fn dare(ctx: Context<'_>) -> Result<(), Error> {
 }
 
 /// Add a new truth question
-#[poise::command(slash_command, prefix_command, check = "has_role")]
+#[poise::command(slash_command, prefix_command, check = "is_admin")]
 async fn add_question(
     ctx: Context<'_>,
     #[description = "The question you want to add"] question: String,
@@ -257,7 +265,7 @@ async fn add_question(
 }
 
 /// Add a new dare
-#[poise::command(slash_command, prefix_command, check = "has_role")]
+#[poise::command(slash_command, prefix_command, check = "is_admin")]
 async fn add_dare(
     ctx: Context<'_>,
     #[description = "The dare you want to add."] dare: String,
@@ -406,7 +414,7 @@ pub async fn suggest(
     Ok(())
 }
 /// Approve a suggestion by its ID
-#[poise::command(slash_command, prefix_command, check = "has_role")]
+#[poise::command(slash_command, prefix_command, check = "is_admin")]
 async fn approve(
     ctx: Context<'_>,
     #[description = "The ID of the suggestion to approve"] id: i64,
@@ -476,7 +484,7 @@ async fn approve(
 }
 
 /// Reject a suggestion by its ID
-#[poise::command(slash_command, prefix_command, check = "has_role")]
+#[poise::command(slash_command, prefix_command, check = "is_admin")]
 async fn reject(
     ctx: Context<'_>,
     #[description = "The ID of the suggestion to reject"] id: i64,
